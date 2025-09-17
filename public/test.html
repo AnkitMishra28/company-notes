@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Page</title>
+</head>
+<body>
+    <h1>Test Page - If you see this, Vercel is serving files correctly</h1>
+    <p>Environment variables:</p>
+    <ul>
+        <li>VITE_SUPABASE_URL: <span id="supabase-url">Loading...</span></li>
+        <li>VITE_SUPABASE_ANON_KEY: <span id="supabase-key">Loading...</span></li>
+    </ul>
+    
+    <script>
+        // Test if environment variables are available
+        document.getElementById('supabase-url').textContent = import.meta.env.VITE_SUPABASE_URL || 'Not set';
+        document.getElementById('supabase-key').textContent = import.meta.env.VITE_SUPABASE_ANON_KEY ? 'Set (hidden)' : 'Not set';
+    </script>
+</body>
+</html>
