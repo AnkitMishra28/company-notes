@@ -84,14 +84,19 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     }
 
     // Check if user already exists
-    const { data: existingUser } = await supabase.auth.admin.getUserByEmail(email);
+    const { data: existingUser } = await supabase.auth.admin.listUsers({
+      page: 1,
+      perPage: 1000
+    });
     
-    if (existingUser.user) {
+    const userExists = existingUser?.users?.find(user => user.email === email);
+    
+    if (userExists) {
       // User exists, check if they're already in this tenant
       const { data: existingProfile } = await supabase
         .from('profiles')
         .select('tenant_id')
-        .eq('id', existingUser.user.id)
+        .eq('id', userExists.id)
         .single();
 
       if (existingProfile && existingProfile.tenant_id === profile.tenant_id) {
@@ -102,8 +107,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       const { data: newProfile, error: profileError } = await supabase
         .from('profiles')
         .insert([{
-          id: existingUser.user.id,
-          email: existingUser.user.email!,
+          id: userExists.id,
+          email: userExists.email!,
           role,
           tenant_id: profile.tenant_id,
         }])
