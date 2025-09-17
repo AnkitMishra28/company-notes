@@ -90,7 +90,7 @@ All API endpoints require JWT authentication via `Authorization: Bearer <token>`
 
 1. **Clone the repository**
 ```bash
-git clone <your-repo-url>
+git clone https://github.com/AnkitMishra28/company-notes.git
 cd company-notes-main
 ```
 
